@@ -6,7 +6,7 @@ import ImageModal from './ImageModal';
 import { 
   Menu, X, Code2, ExternalLink, Mail, Maximize2,
   MessageCircle, ArrowRight, Zap, Code, 
-  User, Briefcase, FileText, Globe, Cpu
+  User, Briefcase, FileText, Globe, Cpu, Layers, Layout, ShieldCheck, Settings
 } from 'lucide-react';
 
 const MobilePortfolio = () => {
@@ -35,8 +35,9 @@ const MobilePortfolio = () => {
   // Professionalized Nav Naming
   const navItems = [
     { id: 'home', label: 'Home', icon: <User size={20} /> },
-    { id: 'projects', label: 'Projects', icon: <Code size={20} /> },
     { id: 'experience', label: 'Experience', icon: <Briefcase size={20} /> },
+    { id: 'projects', label: 'Projects', icon: <Code size={20} /> },
+    { id: 'architecture', label: 'Tech', icon: <Layers size={20} /> },
     { id: 'stack', label: 'Stack', icon: <Cpu size={20} /> }
   ];
 
@@ -57,7 +58,7 @@ const MobilePortfolio = () => {
     };
 
     const observer = new IntersectionObserver(handleIntersection, observerOptions);
-    const sections = ['home', 'projects', 'experience', 'stack'];
+    const sections = ['home', 'experience', 'projects', 'architecture', 'stack'];
     sections.forEach(id => {
       const el = document.getElementById(id);
       if (el) observer.observe(el);
@@ -72,8 +73,7 @@ const MobilePortfolio = () => {
         background: '#020202', 
         minHeight: '100vh', 
         color: '#fff', 
-        fontFamily: 'Inter, sans-serif', 
-        overflowX: 'hidden'
+        fontFamily: 'Inter, sans-serif'
       }}
     >
       {/* Cinematic Starfield Background */}
@@ -117,7 +117,7 @@ const MobilePortfolio = () => {
               <motion.a 
                 whileTap={{ scale: 0.95 }}
                 href="mailto:999.pritammondal@gmail.com"
-                style={{ flex: 1, padding: '1.25rem', background: '#fff', color: '#000', borderRadius: '20px', fontWeight: 800, textAlign: 'center', textDecoration: 'none' }}
+                style={{ flex: 1, padding: '1.25rem', background: 'linear-gradient(135deg, #2997ff 0%, #a855f7 100%)', color: '#fff', borderRadius: '20px', fontWeight: 800, textAlign: 'center', textDecoration: 'none', boxShadow: '0 10px 20px rgba(41,151,255,0.2)' }}
               >
                 Say Hello
               </motion.a>
@@ -136,118 +136,233 @@ const MobilePortfolio = () => {
 
         <TruthAnimation />
 
-        {/* Projects Section */}
-        <section id="projects" style={{ padding: '4rem 1.5rem' }}>
-          <div style={{ marginBottom: '3rem' }}>
-            <h2 style={{ fontSize: '2.5rem', fontWeight: 900 }}>Projects</h2>
-            <div style={{ width: '40px', height: '4px', background: '#2997ff', marginTop: '1rem', borderRadius: '2px' }} />
+        {/* Experience: High-Impact Timeline */}
+        <section id="experience" style={{ padding: '6rem 1.5rem', background: 'linear-gradient(180deg, rgba(168,85,247,0.05) 0%, transparent 100%)' }}>
+          <div style={{ marginBottom: '4rem' }}>
+            <h2 style={{ fontSize: '3rem', fontWeight: 900, letterSpacing: '-0.04em', lineHeight: 1 }}>Professional<br/><span style={{ color: '#a855f7' }}>Journey.</span></h2>
+            <div style={{ width: '60px', height: '4px', background: '#a855f7', marginTop: '1.5rem', borderRadius: '2px' }} />
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
-            {data.projects.map((project) => (
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '3.5rem', borderLeft: '1px solid rgba(168,85,247,0.2)', paddingLeft: '1.8rem', marginLeft: '0.5rem' }}>
+            {data.experience.map((exp, i) => (
               <motion.div
-                key={project.id}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true, margin: "-100px" }}
-                className="glass"
-                style={{ padding: '2rem', borderRadius: '32px', border: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.02)' }}
+                key={exp.id}
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                style={{ position: 'relative' }}
               >
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '2rem' }}>
-                  <div style={{ padding: '0.75rem', background: 'rgba(41,151,255,0.1)', borderRadius: '14px' }}>
-                    <Code2 size={24} color="#2997ff" />
-                  </div>
-                  <ArrowRight size={20} style={{ transform: 'rotate(-45deg)', opacity: 0.4 }} />
+                {/* Pulsing Dot */}
+                <div style={{ position: 'absolute', left: '-2.4rem', top: '0.4rem', width: '18px', height: '18px', borderRadius: '50%', background: '#020202', border: '3px solid #a855f7', boxShadow: '0 0 20px rgba(168,85,247,0.6)' }}>
+                   <motion.div animate={{ scale: [1, 1.5, 1], opacity: [0.5, 0, 0.5] }} transition={{ duration: 2, repeat: Infinity }} style={{ position: 'absolute', inset: -2, borderRadius: '50%', border: '1px solid #a855f7' }} />
                 </div>
-                {project.title === 'VidIntelligence' ? (
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '1.5rem' }}>
-                    <motion.div 
-                      whileHover="hover"
-                      whileTap="hover"
-                      style={{ borderRadius: '16px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.05)', cursor: 'zoom-in', position: 'relative' }}
-                      onClick={() => setSelectedImage({ src: "/vidintelligence-mistral.png", alt: "Mistral Analysis" })}
-                    >
-                      <img src="/vidintelligence-mistral.png" alt="Mistral Analysis" style={{ width: '100%', display: 'block' }} />
-                      <motion.div 
-                        variants={{ hover: { opacity: 1 } }}
-                        initial={{ opacity: 0 }}
-                        style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-                      >
-                        <div style={{ padding: '10px', background: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(5px)', borderRadius: '50%', color: '#fff', border: '1px solid rgba(255,255,255,0.2)' }}>
-                          <Maximize2 size={20} />
-                        </div>
-                      </motion.div>
-                    </motion.div>
-                    <motion.div 
-                      whileHover="hover"
-                      whileTap="hover"
-                      style={{ borderRadius: '16px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.05)', cursor: 'zoom-in', position: 'relative' }}
-                      onClick={() => setSelectedImage({ src: "/vidintelligence-new.png", alt: "Empty UI" })}
-                    >
-                      <img src="/vidintelligence-new.png" alt="Empty UI" style={{ width: '100%', display: 'block' }} />
-                      <motion.div 
-                        variants={{ hover: { opacity: 1 } }}
-                        initial={{ opacity: 0 }}
-                        style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-                      >
-                        <div style={{ padding: '10px', background: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(5px)', borderRadius: '50%', color: '#fff', border: '1px solid rgba(255,255,255,0.2)' }}>
-                          <Maximize2 size={20} />
-                        </div>
-                      </motion.div>
-                    </motion.div>
+                
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginBottom: '1.5rem' }}>
+                  <span style={{ fontSize: '0.8rem', fontWeight: 800, color: '#a855f7', textTransform: 'uppercase', letterSpacing: '0.1em' }}>{exp.duration}</span>
+                  <h3 style={{ fontSize: '1.8rem', fontWeight: 800, lineHeight: 1.1 }}>{exp.role}</h3>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <div style={{ width: '12px', height: '1.5px', background: 'rgba(255,255,255,0.3)' }} />
+                    <p style={{ color: 'rgba(255,255,255,0.6)', fontWeight: 700, margin: 0, fontSize: '1.1rem' }}>{exp.company}</p>
                   </div>
-                ) : project.image_url && (
-                  <motion.div 
-                    whileHover="hover"
-                    whileTap="hover"
-                    style={{ marginBottom: '1.5rem', borderRadius: '16px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.05)', cursor: 'zoom-in', position: 'relative' }}
-                    onClick={() => setSelectedImage({ src: project.image_url, alt: project.title })}
-                  >
-                    <img src={project.image_url} alt={project.title} style={{ width: '100%', display: 'block' }} />
-                    <motion.div 
-                      variants={{ hover: { opacity: 1 } }}
-                      initial={{ opacity: 0 }}
-                      style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                      <div style={{ padding: '10px', background: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(5px)', borderRadius: '50%', color: '#fff', border: '1px solid rgba(255,255,255,0.2)' }}>
-                        <Maximize2 size={20} />
-                      </div>
-                    </motion.div>
-                  </motion.div>
-                )}
-                <h3 style={{ fontSize: '1.6rem', fontWeight: 800, marginBottom: '1rem' }}>{project.title}</h3>
-                <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.95rem', lineHeight: 1.6, marginBottom: '2rem' }}>{project.description}</p>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
-                  {project.tags?.map(tag => (
-                    <span key={tag} style={{ fontSize: '0.7rem', padding: '0.4rem 0.8rem', background: 'rgba(255,255,255,0.03)', borderRadius: '8px' }}>{tag}</span>
-                  ))}
+                </div>
+
+                <div style={{ background: 'rgba(255,255,255,0.02)', padding: '1.5rem', borderRadius: '24px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                  <ul style={{ color: 'rgba(255,255,255,0.4)', listStyleType: 'none', padding: 0, margin: 0 }}>
+                    {exp.description.split('\n').map((bullet, idx) => bullet.trim() && (
+                      <li key={idx} style={{ marginBottom: '1rem', display: 'flex', gap: '0.75rem', fontSize: '0.95rem', lineHeight: 1.6 }}>
+                        <span style={{ color: '#a855f7', fontWeight: 900 }}>→</span>
+                        {bullet.trim()}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </motion.div>
             ))}
           </div>
         </section>
 
-        {/* Experience Section */}
-        <section id="experience" style={{ padding: '4rem 1.5rem' }}>
-          <h2 style={{ fontSize: '2.5rem', fontWeight: 900, marginBottom: '3rem' }}>Experience</h2>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem', borderLeft: '1px solid rgba(255,255,255,0.1)', paddingLeft: '1.5rem' }}>
-            {data.experience.map((exp) => (
-              <motion.div key={exp.id} initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-                <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#a855f7', textTransform: 'uppercase' }}>{exp.duration}</span>
-                <h3 style={{ fontSize: '1.4rem', fontWeight: 800, margin: '0.5rem 0' }}>{exp.role}</h3>
-                <p style={{ color: 'rgba(255,255,255,0.4)' }}>{exp.company}</p>
-              </motion.div>
-            ))}
+        {/* Projects Showcase: High-Impact Design */}
+        <section id="projects" style={{ padding: '4rem 0' }}>
+          <div style={{ padding: '0 1.5rem', marginBottom: '4rem' }}>
+            <h2 style={{ fontSize: '3rem', fontWeight: 900, letterSpacing: '-0.04em' }}>Selected <br/><span style={{ color: '#2997ff' }}>Works.</span></h2>
+            <div style={{ width: '60px', height: '4px', background: '#2997ff', marginTop: '1.5rem', borderRadius: '2px' }} />
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '5rem' }}>
+            {data.projects.map((project, index) => {
+              const isEven = index % 2 === 0;
+              const isVidIntell = project.title === 'VidIntelligence';
+
+              return (
+                <motion.div
+                  key={project.id}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  style={{ 
+                    position: 'relative',
+                    padding: isVidIntell ? '0' : '0 1.5rem'
+                  }}
+                >
+                  {/* Subtle Background Glow for each project */}
+                  <div style={{ 
+                    position: 'absolute', 
+                    top: '20%', 
+                    left: isEven ? '10%' : 'auto', 
+                    right: isEven ? 'auto' : '10%',
+                    width: '150px', 
+                    height: '150px', 
+                    background: index % 2 === 0 ? 'rgba(41,151,255,0.1)' : 'rgba(168,85,247,0.1)',
+                    filter: 'blur(80px)',
+                    zIndex: 0
+                  }} />
+
+                  <div className={isVidIntell ? "" : "glass"} style={{ 
+                    padding: isVidIntell ? '2rem 1.5rem' : '2.5rem', 
+                    borderRadius: isVidIntell ? '0' : '32px', 
+                    border: isVidIntell ? 'none' : '1px solid rgba(255,255,255,0.08)',
+                    background: isVidIntell ? 'rgba(41,151,255,0.03)' : 'rgba(255,255,255,0.02)',
+                    position: 'relative',
+                    zIndex: 1,
+                    overflow: 'hidden'
+                  }}>
+                    {/* Project Header */}
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '2rem' }}>
+                      <div>
+                        <div style={{ fontSize: '0.75rem', fontWeight: 800, color: '#2997ff', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: '0.5rem' }}>Featured Project</div>
+                        <h3 style={{ fontSize: '2.2rem', fontWeight: 900, lineHeight: 1.1 }}>{project.title}</h3>
+                      </div>
+                      <div style={{ padding: '0.75rem', background: 'rgba(255,255,255,0.05)', borderRadius: '14px' }}>
+                        <Code2 size={24} color="#2997ff" />
+                      </div>
+                    </div>
+
+                    {/* Immersive Image Display */}
+                    {isVidIntell ? (
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', marginBottom: '2.5rem' }}>
+                        <motion.div 
+                          whileTap={{ scale: 0.98 }}
+                          style={{ borderRadius: '24px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.1)', cursor: 'zoom-in', position: 'relative', boxShadow: '0 20px 40px rgba(0,0,0,0.3)' }}
+                          onClick={() => setSelectedImage({ src: "/vidintelligence-mistral.png", alt: "Mistral Analysis" })}
+                        >
+                          <img src="/vidintelligence-mistral.png" alt="Mistral Analysis" style={{ width: '100%', display: 'block' }} />
+                          <div style={{ position: 'absolute', bottom: '1.5rem', right: '1.5rem', padding: '10px', background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(10px)', borderRadius: '50%', color: '#fff' }}>
+                            <Maximize2 size={20} />
+                          </div>
+                        </motion.div>
+                        <motion.div 
+                          whileTap={{ scale: 0.98 }}
+                          style={{ borderRadius: '24px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.1)', cursor: 'zoom-in', position: 'relative', boxShadow: '0 20px 40px rgba(0,0,0,0.3)' }}
+                          onClick={() => setSelectedImage({ src: "/vidintelligence-new.png", alt: "Empty UI" })}
+                        >
+                          <img src="/vidintelligence-new.png" alt="Empty UI" style={{ width: '100%', display: 'block' }} />
+                          <div style={{ position: 'absolute', bottom: '1.5rem', right: '1.5rem', padding: '10px', background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(10px)', borderRadius: '50%', color: '#fff' }}>
+                            <Maximize2 size={20} />
+                          </div>
+                        </motion.div>
+                      </div>
+                    ) : (project.title === 'AI-Powered Portfolio & Resume Engine' || project.title === 'Agentic AI Portfolio & Experience Hub') ? (
+                      <motion.div 
+                        whileTap={{ scale: 0.98 }}
+                        style={{ marginBottom: '2.5rem', borderRadius: '24px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.1)', cursor: 'zoom-in', position: 'relative', boxShadow: '0 20px 40px rgba(0,0,0,0.3)' }}
+                        onClick={() => setSelectedImage({ src: "/resume-real.png", alt: project.title })}
+                      >
+                        <img src="/resume-real.png" alt={project.title} style={{ width: '100%', display: 'block' }} />
+                        <div style={{ position: 'absolute', bottom: '1.5rem', right: '1.5rem', padding: '10px', background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(10px)', borderRadius: '50%', color: '#fff' }}>
+                          <Maximize2 size={20} />
+                        </div>
+                      </motion.div>
+                    ) : project.image_url && (
+                      <motion.div 
+                        whileTap={{ scale: 0.98 }}
+                        style={{ marginBottom: '2.5rem', borderRadius: '24px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.1)', cursor: 'zoom-in', position: 'relative', boxShadow: '0 20px 40px rgba(0,0,0,0.3)' }}
+                        onClick={() => setSelectedImage({ src: project.image_url, alt: project.title })}
+                      >
+                        <img src={project.image_url} alt={project.title} style={{ width: '100%', display: 'block' }} />
+                        <div style={{ position: 'absolute', bottom: '1.5rem', right: '1.5rem', padding: '10px', background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(10px)', borderRadius: '50%', color: '#fff' }}>
+                          <Maximize2 size={20} />
+                        </div>
+                      </motion.div>
+                    )}
+
+                    {/* Project Footer Details */}
+                    <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '1.05rem', lineHeight: 1.6, marginBottom: '2.5rem' }}>{project.description}</p>
+                    
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>
+                      {project.tags?.map(tag => (
+                        <span key={tag} style={{ 
+                          fontSize: '0.75rem', 
+                          fontWeight: 700,
+                          padding: '0.5rem 1rem', 
+                          background: 'rgba(255,255,255,0.05)', 
+                          borderRadius: '100px',
+                          color: '#2997ff',
+                          border: '1px solid rgba(255,255,255,0.05)'
+                        }}>
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* Architecture Section */}
+        <section id="architecture" style={{ padding: '6rem 1.5rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '2rem' }}>
+            <div style={{ width: '40px', height: '40px', background: 'rgba(168,85,247,0.1)', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Layers size={22} color="#a855f7" />
+            </div>
+            <h2 style={{ fontSize: '1.75rem', fontWeight: 900, margin: 0 }}>The Architecture</h2>
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
+            {/* Functions */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+              {[
+                { icon: <FileText size={22} color="#2997ff" />, title: "Resume Engine", desc: "Real-time LaTeX sync via Gemini AI." },
+                { icon: <Settings size={22} color="#a855f7" />, title: "Command Portal", desc: "Centralized professional orchestration." },
+                { icon: <ShieldCheck size={22} color="#10b981" />, title: "Identity Pipeline", desc: "GitHub OAuth + Supabase RLS security." }
+              ].map((fn, i) => (
+                <div key={i} style={{ padding: '1.5rem', background: 'rgba(255,255,255,0.03)', borderRadius: '20px', border: '1px solid rgba(255,255,255,0.05)', display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                  <div>{fn.icon}</div>
+                  <div>
+                    <div style={{ fontWeight: 800, fontSize: '1rem' }}>{fn.title}</div>
+                    <div style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.4)' }}>{fn.desc}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Admin Showcase */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
+              {[
+                { title: 'Command Portal', img: '/dashboard-real.png' },
+                { title: 'Project Matrix', img: '/projects-real.png' }
+              ].map((item, i) => (
+                <div key={i}>
+                  <div className="glass" style={{ padding: '0.35rem', borderRadius: '16px', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', marginBottom: '1.5rem' }}>
+                    <img src={item.img} alt={item.title} style={{ width: '100%', borderRadius: '12px', display: 'block' }} />
+                  </div>
+                  <h4 style={{ fontSize: '1.1rem', fontWeight: 800, marginBottom: '0.5rem' }}>{item.title}</h4>
+                  <div style={{ width: '40px', height: '2px', background: '#2997ff', borderRadius: '2px' }}></div>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 
         {/* Stack Section */}
         <section id="stack" style={{ padding: '4rem 1.5rem' }}>
-          <h2 style={{ fontSize: '2.5rem', fontWeight: 900, marginBottom: '3rem' }}>Core Stack</h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1rem' }}>
+          <h2 style={{ fontSize: '2rem', fontWeight: 900, marginBottom: '2.5rem' }}>Core Stack</h2>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.75rem' }}>
             {data.skills.map((skill) => (
-              <div key={skill.id} style={{ padding: '1.5rem', background: 'rgba(255,255,255,0.03)', borderRadius: '20px', border: '1px solid rgba(255,255,255,0.05)' }}>
-                <div style={{ fontSize: '1.1rem', fontWeight: 700 }}>{skill.name}</div>
-                <div style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase' }}>{skill.category}</div>
+              <div key={skill.id} style={{ padding: '1.25rem', background: 'rgba(255,255,255,0.03)', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                <div style={{ fontSize: '0.9rem', fontWeight: 700 }}>{skill.name}</div>
+                <div style={{ fontSize: '0.65rem', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', marginTop: '0.25rem' }}>{skill.category}</div>
               </div>
             ))}
           </div>
@@ -255,8 +370,8 @@ const MobilePortfolio = () => {
       </main>
 
       {/* Floating Navigation */}
-      <nav style={{ position: 'fixed', bottom: '2rem', left: '1rem', right: '1rem', zIndex: 1000 }}>
-        <div style={{ background: 'rgba(15,15,15,0.7)', backdropFilter: 'blur(25px)', borderRadius: '32px', border: '1px solid rgba(255,255,255,0.1)', padding: '0.75rem', display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
+      <nav style={{ position: 'fixed', bottom: '1.5rem', left: '1rem', right: '1rem', zIndex: 1000 }}>
+        <div style={{ background: 'rgba(10,10,10,0.85)', backdropFilter: 'blur(30px)', borderRadius: '32px', border: '1px solid rgba(255,255,255,0.1)', padding: '0.5rem', display: 'flex', justifyContent: 'space-around', alignItems: 'center', boxShadow: '0 10px 30px rgba(0,0,0,0.5)' }}>
           {navItems.map(item => (
             <motion.button
               key={item.id}
@@ -266,14 +381,33 @@ const MobilePortfolio = () => {
                 document.getElementById(item.id)?.scrollIntoView({ behavior: 'smooth' });
               }}
               style={{ 
-                background: activeSection === item.id ? 'rgba(255,255,255,0.1)' : 'transparent', 
-                border: 'none', borderRadius: '24px', padding: '0.75rem',
+                border: 'none', 
+                borderRadius: '24px', 
+                padding: '0.75rem',
                 color: activeSection === item.id ? '#2997ff' : 'rgba(255,255,255,0.3)',
-                display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.25rem'
+                display: 'flex', 
+                flexDirection: 'column', 
+                alignItems: 'center', 
+                gap: '0.25rem',
+                position: 'relative',
+                flex: 1
               }}
             >
+              {activeSection === item.id && (
+                <motion.div
+                  layoutId="activeTab"
+                  transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    background: 'rgba(255,255,255,0.1)',
+                    borderRadius: '24px',
+                    zIndex: -1
+                  }}
+                />
+              )}
               {item.icon}
-              <span style={{ fontSize: '0.6rem', fontWeight: 800 }}>{item.label}</span>
+              <span style={{ fontSize: '0.65rem', fontWeight: 800 }}>{item.label}</span>
             </motion.button>
           ))}
         </div>

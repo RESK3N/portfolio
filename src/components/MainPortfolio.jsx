@@ -29,9 +29,9 @@ function MainPortfolio() {
     <div className="app">
       <Hero />
       <TruthAnimation />
-      <About />
       <Experience />
       <Projects />
+      <About />
       <Skills />
       <ResumeDownload />
       <BuiltWith />

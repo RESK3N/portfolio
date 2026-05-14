@@ -96,6 +96,23 @@ const Projects = () => {
                       </motion.div>
                     </motion.div>
                   </div>
+                ) : (project.title === 'AI-Powered Portfolio & Resume Engine' || project.title === 'Agentic AI Portfolio & Experience Hub') ? (
+                  <motion.div 
+                    whileHover="hover"
+                    style={{ marginBottom: '1.5rem', borderRadius: '8px', overflow: 'hidden', cursor: 'zoom-in', position: 'relative' }}
+                    onClick={() => setSelectedImage({ src: "/resume-real.png", alt: project.title })}
+                  >
+                    <img src="/resume-real.png" alt={project.title} style={{ width: '100%', height: 'auto', display: 'block' }} />
+                    <motion.div 
+                      variants={{ hover: { opacity: 1 } }}
+                      initial={{ opacity: 0 }}
+                      style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: { duration: 0.2 } }}
+                    >
+                      <div style={{ padding: '10px', background: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(5px)', borderRadius: '50%', color: '#fff', border: '1px solid rgba(255,255,255,0.2)' }}>
+                        <Maximize2 size={20} />
+                      </div>
+                    </motion.div>
+                  </motion.div>
                 ) : project.image_url && (
                   <motion.div 
                     whileHover="hover"
