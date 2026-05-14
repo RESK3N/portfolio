@@ -1,29 +1,21 @@
-import { useEffect } from 'react';
-import Hero from './components/Hero';
-import About from './components/About';
-import Experience from './components/Experience';
-import Projects from './components/Projects';
-import Skills from './components/Skills';
-import Contact from './components/Contact';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import MainPortfolio from './components/MainPortfolio';
+import AdminLayout from './components/admin/AdminLayout';
+import Dashboard from './components/admin/Dashboard';
 
 function App() {
-  useEffect(() => {
-    // Smooth scrolling for anchor links if any
-    document.documentElement.style.scrollBehavior = 'smooth';
-    return () => {
-      document.documentElement.style.scrollBehavior = 'auto';
-    };
-  }, []);
-
   return (
-    <div className="app">
-      <Hero />
-      <About />
-      <Experience />
-      <Projects />
-      <Skills />
-      <Contact />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<MainPortfolio />} />
+        
+        {/* Admin Routes */}
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<Dashboard />} />
+          {/* We will add more admin sub-routes here like manage projects */}
+        </Route>
+      </Routes>
+    </Router>
   );
 }
 

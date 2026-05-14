@@ -1,6 +1,21 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { supabase } from '../utils/supabaseClient';
 
 const About = () => {
+  const [content, setContent] = useState('');
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchAbout = async () => {
+      const { data, error } = await supabase.from('about').select('*').limit(1);
+      if (error) console.error('Error fetching about:', error);
+      else if (data && data.length > 0) setContent(data[0].content);
+      setLoading(false);
+    };
+    fetchAbout();
+  }, []);
+
   return (
     <section id="about" className="section container" style={{ minHeight: 'auto', paddingBottom: '4rem' }}>
       <motion.div
@@ -11,13 +26,23 @@ const About = () => {
       >
         <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)' }}>About Me.</h2>
         <div className="glass" style={{ padding: '3rem', marginTop: '2rem' }}>
-          <p style={{ color: 'var(--text-primary)', fontSize: '1.25rem', lineHeight: 1.8, marginBottom: '1.5rem' }}>
-            I am an <span className="gradient-text" style={{fontWeight: 600}}>AI-focused Computer Science student</span> at Adamas University (B.Tech, 2023–2027) 
-            with hands-on experience in agentic AI systems, cloud automation, and computer vision.
-          </p>
-          <p style={{ lineHeight: 1.8 }}>
-            Skilled in building multi-agent workflows, integrating cloud AI services, and developing scalable automation pipelines for enterprise infrastructure operations. I thrive at the intersection of complex backend logic and seamless, intuitive user experiences.
-          </p>
+          {loading ? (
+            <p style={{ color: 'var(--text-secondary)' }}>Loading...</p>
+          ) : content ? (
+            <div style={{ lineHeight: 1.8, whiteSpace: 'pre-wrap', color: 'var(--text-secondary)' }}>
+              {content}
+            </div>
+          ) : (
+            <>
+              <p style={{ color: 'var(--text-primary)', fontSize: '1.25rem', lineHeight: 1.8, marginBottom: '1.5rem' }}>
+                I am an <span className="gradient-text" style={{fontWeight: 600}}>AI-focused Computer Science student</span> at Adamas University (B.Tech, 2023–2027) 
+                with hands-on experience in agentic AI systems, cloud automation, and computer vision.
+              </p>
+              <p style={{ lineHeight: 1.8, color: 'var(--text-secondary)' }}>
+                Skilled in building multi-agent workflows, integrating cloud AI services, and developing scalable automation pipelines for enterprise infrastructure operations. I thrive at the intersection of complex backend logic and seamless, intuitive user experiences.
+              </p>
+            </>
+          )}
         </div>
       </motion.div>
     </section>
