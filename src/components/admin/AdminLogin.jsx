@@ -15,7 +15,7 @@ const AdminLogin = () => {
   return (
     <div style={{
       minHeight: '100vh',
-      background: 'var(--bg-primary)',
+      background: 'var(--bg-color)',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -79,7 +79,7 @@ const AdminLogin = () => {
             gap: '0.75rem',
             padding: '0.875rem 1.5rem',
             background: 'var(--text-primary)',
-            color: 'var(--bg-primary)',
+            color: 'var(--bg-color)',
             border: 'none',
             borderRadius: '12px',
             fontSize: '0.95rem',

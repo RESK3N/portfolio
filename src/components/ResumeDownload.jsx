@@ -33,7 +33,7 @@ const ResumeDownload = () => {
                   gap: '0.75rem',
                   padding: '0.875rem 1.75rem',
                   background: 'var(--text-primary)',
-                  color: 'var(--bg-primary)',
+                  color: 'var(--bg-color)',
                   border: 'none',
                   borderRadius: '12px',
                   fontSize: '0.95rem',

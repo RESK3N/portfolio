@@ -1,16 +1,87 @@
-# React + Vite
+# 🚀 AI-Driven Portfolio CMS & Resume Engine
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An enterprise-grade, Apple-inspired portfolio system featuring a real-time Command Center and an automated LaTeX resume pipeline powered by Google Gemini AI.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 📸 System Showcase
 
-## React Compiler
+### 🛠️ The Command Portal
+A high-end administrative interface designed for seamless professional orchestration. Manage projects, experience, and skills with real-time synchronization to the public frontend.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+![Command Portal Overview](./public/dashboard-real.png)
 
-## Expanding the ESLint configuration
+### 📊 Project Matrix
+A sophisticated management hub for your technical depth. Map your projects with live status indicators and repository links.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+![Project Matrix](./public/projects-real.png)
+
+### 🧠 Resume Intelligence
+The crown jewel of the system. An automated synthesis pipeline that gathers your latest professional achievements and crafts a perfectly formatted LaTeX resume in seconds.
+
+![Resume Intelligence](./public/resume-real.png)
+
+---
+
+## ⚡ Key Features
+
+- **Dynamic Data Sync**: Zero manual updates. Change something in the CMS, and it reflects instantly on your site and your generated resume.
+- **AI Resume Automator**: Leverages **Google Gemini 1.5 Flash** to parse your database and generate ATS-friendly LaTeX documents.
+- **Apple-Inspired UX**: Built with **Framer Motion** for organic, fluid animations and a premium glassmorphic aesthetic.
+- **Secure Identity**: Protected by **GitHub OAuth** and **Supabase RLS**, ensuring only you hold the keys to your professional data.
+- **Enterprise DevOps**: Fully automated **CI/CD via Netlify**, with **Dependabot** security monitoring and GitHub Actions integration.
+
+---
+
+## 🏗️ Technical Architecture
+
+| Layer | Technology | Purpose |
+| :--- | :--- | :--- |
+| **Frontend** | React + Vite | Reactive UI & Lightning-fast build pipeline |
+| **Animation** | Framer Motion | Premium physics-based interactions |
+| **Database** | Supabase (Postgres) | Real-time data storage & RLS security |
+| **AI Brain** | Google Gemini AI | Dynamic resume synthesis & content generation |
+| **Orchestration** | MAF (GA) | Multi-agent framework for complex automation |
+| **Infrastructure**| Netlify | Serverless functions & global deployment |
+
+---
+
+## 🚀 Getting Started
+
+### 1. Prerequisites
+- Node.js (v18+)
+- Supabase Project
+- Google Gemini API Key
+
+### 2. Installation
+```bash
+# Clone the repository
+git clone https://github.com/your-username/portfolio-cms.git
+
+# Install dependencies
+npm install
+
+# Set up environment variables (.env)
+VITE_SUPABASE_URL=your_url
+VITE_SUPABASE_ANON_KEY=your_key
+GEMINI_API_KEY=your_key
+```
+
+### 3. Database Initialization
+Run the SQL provided in `supabase_schema.sql` within your Supabase SQL Editor to initialize the tables and RLS policies.
+
+### 4. Development
+```bash
+npm run dev
+```
+
+---
+
+## 🛡️ Security & Reliability
+- **GitHub Actions**: Automated testing and deployment.
+- **Dependabot**: Proactive dependency vulnerability management.
+- **Supabase RLS**: Row-level data isolation.
+
+---
+
+Built with ❤️ for the next generation of engineers.

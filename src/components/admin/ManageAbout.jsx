@@ -25,12 +25,10 @@ const ManageAbout = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (aboutId) {
-      // Update existing
       const { error } = await supabase.from('about').update({ content }).eq('id', aboutId);
       if (error) alert('Error updating');
       else alert('Updated successfully');
     } else {
-      // Insert new
       const { error } = await supabase.from('about').insert([{ content }]);
       if (error) alert('Error saving');
       else {
@@ -41,21 +39,29 @@ const ManageAbout = () => {
   };
 
   return (
-    <div className="bg-white dark:bg-[#111] p-6 rounded-2xl border border-gray-200 dark:border-gray-800">
-      <h2 className="text-2xl font-bold mb-6">Manage About Section</h2>
+    <div>
+      <h2 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '1.5rem', color: '#fff' }}>Manage About Section</h2>
       
-      {loading ? <p>Loading...</p> : (
-        <form onSubmit={handleSubmit} className="mb-12 space-y-4 max-w-2xl">
-          <p className="text-sm text-gray-500 mb-2">Edit your about section. You can use simple text. This will replace the hardcoded text in the About section.</p>
+      {loading ? <p style={{ color: 'rgba(255,255,255,0.5)' }}>Loading...</p> : (
+        <form onSubmit={handleSubmit} style={{ marginBottom: '3rem', maxWidth: '640px' }}>
+          <p style={{ fontSize: '0.875rem', color: 'rgba(255,255,255,0.6)', marginBottom: '1rem' }}>
+            Edit your about section. You can use simple text. This will replace the hardcoded text in the About section.
+          </p>
           <textarea 
             required 
             value={content} 
             onChange={(e) => setContent(e.target.value)} 
             placeholder="I am an AI-focused Computer Science student..." 
             rows="8" 
-            className="w-full p-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-transparent"
+            style={{ 
+              width: '100%', padding: '0.75rem 1rem', borderRadius: '8px',
+              border: '1px solid rgba(255,255,255,0.12)', background: 'rgba(255,255,255,0.04)',
+              color: '#fff', fontSize: '0.9rem', outline: 'none', marginBottom: '1rem', resize: 'vertical'
+            }}
           ></textarea>
-          <button type="submit" className="px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors">Save Content</button>
+          <button type="submit" style={{ padding: '0.75rem 1.5rem', background: '#3b82f6', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: 600, fontSize: '0.9rem', cursor: 'pointer' }}>
+            Save Content
+          </button>
         </form>
       )}
     </div>

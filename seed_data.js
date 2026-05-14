@@ -17,9 +17,9 @@ async function seed() {
 
   // 1. Seed About
   const aboutText = "AI-focused Computer Science student with hands-on experience in agentic AI systems, cloud automation, and computer vision. Skilled in building multi-agent workflows, integrating cloud AI services, and developing scalable automation pipelines for enterprise infrastructure operations.";
-  await supabase.from('about').delete().neq('id', '00000000-0000-0000-0000-000000000000'); // Clear old
-  await supabase.from('about').insert([{ content: aboutText }]);
-  console.log('✅ About seeded');
+  const { error: err1 } = await supabase.from('about').upsert([{ content: aboutText }], { onConflict: 'content' });
+  if (err1) console.error('Error seeding about:', err1);
+  else console.log('✅ About seeded');
 
   // 2. Seed Experience
   const experiences = [
@@ -30,9 +30,9 @@ async function seed() {
       description: 'Developed AI-driven automation workflows for cloud-based infrastructure management in an enterprise environment\nIntegrated cloud AI services to enable intelligent decision-making and reduce manual effort\nDesigned scalable automation pipelines improving system efficiency and responsiveness\nCollaborated within a professional engineering team while adhering to strict security and confidentiality standards'
     }
   ];
-  await supabase.from('experience').delete().neq('id', '00000000-0000-0000-0000-000000000000');
-  await supabase.from('experience').insert(experiences);
-  console.log('✅ Experience seeded');
+  const { error: err2 } = await supabase.from('experience').upsert(experiences, { onConflict: 'company,role' });
+  if (err2) console.error('Error seeding experience:', err2);
+  else console.log('✅ Experience seeded');
 
   // 3. Seed Projects
   const projects = [
@@ -52,9 +52,9 @@ async function seed() {
       tags: ['Python', 'LangChain', 'HuggingFace', 'Flask']
     }
   ];
-  await supabase.from('projects').delete().neq('id', '00000000-0000-0000-0000-000000000000');
-  await supabase.from('projects').insert(projects);
-  console.log('✅ Projects seeded');
+  const { error: err3 } = await supabase.from('projects').upsert(projects, { onConflict: 'title' });
+  if (err3) console.error('Error seeding projects:', err3);
+  else console.log('✅ Projects seeded');
 
   // 4. Seed Skills
   const skills = [
@@ -66,11 +66,11 @@ async function seed() {
     { category: 'Agentic AI', items: ['Microsoft Agent Framework', 'Multi-agent orchestration'] },
     { category: 'Other', items: ['Bash', 'Kali Linux', 'ESP32', 'Arduino'] }
   ];
-  await supabase.from('skills').delete().neq('id', '00000000-0000-0000-0000-000000000000');
-  await supabase.from('skills').insert(skills);
-  console.log('✅ Skills seeded');
+  const { error: err4 } = await supabase.from('skills').upsert(skills, { onConflict: 'category' });
+  if (err4) console.error('Error seeding skills:', err4);
+  else console.log('✅ Skills seeded');
 
-  console.log('\n🚀 ALL DONE! Your live site and admin panel should now be populated.');
+  console.log('\n🚀 ALL DONE! Check for errors above.');
 }
 
 seed().catch(err => console.error('Error seeding data:', err));
