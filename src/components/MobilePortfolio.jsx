@@ -154,6 +154,11 @@ const MobilePortfolio = () => {
                     <ArrowRight size={20} style={{ transform: 'rotate(-45deg)', opacity: 0.4 }} />
                   </div>
                 </div>
+                {project.image_url && (
+                  <div style={{ marginBottom: '1.5rem', borderRadius: '16px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.05)' }}>
+                    <img src={project.image_url} alt={project.title} style={{ width: '100%', display: 'block' }} />
+                  </div>
+                )}
                 <h3 style={{ fontSize: '1.6rem', fontWeight: 800, marginBottom: '1rem' }}>{project.title}</h3>
                 <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.95rem', lineHeight: 1.6, marginBottom: '2rem' }}>{project.description}</p>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>

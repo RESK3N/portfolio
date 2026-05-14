@@ -111,6 +111,10 @@ const ManageProjects = () => {
                 <label style={{ fontSize: '0.75rem', fontWeight: 700, color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase' }}>Live Link</label>
                 <input style={{ padding: '0.75rem', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: '#fff' }} value={formData.live_link} onChange={e => setFormData({...formData, live_link: e.target.value})} placeholder="https://..." />
               </div>
+              <div style={{ gridColumn: 'span 2', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                <label style={{ fontSize: '0.75rem', fontWeight: 700, color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase' }}>Image URL (Optional)</label>
+                <input style={{ padding: '0.75rem', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: '#fff' }} value={formData.image_url || ''} onChange={e => setFormData({...formData, image_url: e.target.value})} placeholder="/screenshot.png or https://..." />
+              </div>
             </div>
             <button type="submit" style={{ marginTop: '2rem', width: '100%', padding: '1rem', background: '#2997ff', color: '#fff', border: 'none', borderRadius: '12px', fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem' }}>
               <Save size={20} />
