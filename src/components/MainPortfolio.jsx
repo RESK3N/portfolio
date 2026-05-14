@@ -6,6 +6,7 @@ import Projects from './Projects';
 import Skills from './Skills';
 import Contact from './Contact';
 import BuiltWith from './BuiltWith';
+import ResumeDownload from './ResumeDownload';
 
 function MainPortfolio() {
   useEffect(() => {
@@ -23,6 +24,7 @@ function MainPortfolio() {
       <Experience />
       <Projects />
       <Skills />
+      <ResumeDownload />
       <BuiltWith />
       <Contact />
     </div>

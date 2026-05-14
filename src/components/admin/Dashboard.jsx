@@ -5,6 +5,7 @@ import ManageProjects from './ManageProjects';
 import ManageExperience from './ManageExperience';
 import ManageSkills from './ManageSkills';
 import ManageAbout from './ManageAbout';
+import ManageResume from './ManageResume';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -25,6 +26,8 @@ const Dashboard = () => {
         return <ManageSkills />;
       case 'about':
         return <ManageAbout />;
+      case 'resume':
+        return <ManageResume />;
       case 'overview':
       default:
         return (
@@ -54,6 +57,8 @@ const Dashboard = () => {
           <button onClick={() => setActiveTab('projects')} className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${activeTab === 'projects' ? 'bg-gray-100 dark:bg-gray-800 font-medium' : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-900'}`}>Manage Projects</button>
           <button onClick={() => setActiveTab('experience')} className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${activeTab === 'experience' ? 'bg-gray-100 dark:bg-gray-800 font-medium' : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-900'}`}>Manage Experience</button>
           <button onClick={() => setActiveTab('skills')} className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${activeTab === 'skills' ? 'bg-gray-100 dark:bg-gray-800 font-medium' : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-900'}`}>Manage Skills</button>
+          <div className="border-t border-gray-200 dark:border-gray-800 my-3"></div>
+          <button onClick={() => setActiveTab('resume')} className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${activeTab === 'resume' ? 'bg-gray-100 dark:bg-gray-800 font-medium' : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-900'}`}>🤖 Resume Generator</button>
         </nav>
         <div className="p-4 border-t border-gray-200 dark:border-gray-800">
           <button 

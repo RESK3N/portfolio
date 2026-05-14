@@ -54,3 +54,18 @@ CREATE POLICY "Allow authenticated full access." ON skills FOR ALL USING (auth.r
 ALTER TABLE about ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Allow public read-only access." ON about FOR SELECT USING (true);
 CREATE POLICY "Allow authenticated full access." ON about FOR ALL USING (auth.role() = 'authenticated');
+
+-- 5. Storage Bucket for Resume files
+-- Run this SEPARATELY after the above if you get errors (storage.buckets may need to exist first)
+INSERT INTO storage.buckets (id, name, public) VALUES ('resume', 'resume', true);
+
+-- Allow public read access to resume files
+CREATE POLICY "Allow public read access to resume" ON storage.objects
+  FOR SELECT USING (bucket_id = 'resume');
+
+-- Allow authenticated users to upload/update resume files
+CREATE POLICY "Allow authenticated upload to resume" ON storage.objects
+  FOR INSERT WITH CHECK (bucket_id = 'resume' AND auth.role() = 'authenticated');
+
+CREATE POLICY "Allow authenticated update to resume" ON storage.objects
+  FOR UPDATE USING (bucket_id = 'resume' AND auth.role() = 'authenticated');
