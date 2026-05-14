@@ -39,9 +39,9 @@ const BuiltWith = () => {
   ];
 
   const adminShowcase = [
-    { title: 'System Overview', img: '/dashboard-real.png', desc: 'Real-time monitoring of database status, AI readiness, and system logs.' },
-    { title: 'Project Matrix', img: '/projects-real.png', desc: 'Seamless management of your professional project gallery with live syncing.' },
-    { title: 'Resume Intelligence', img: '/resume-real.png', desc: 'High-end synthesis interface for Gemini-powered LaTeX resume generation.' }
+    { title: 'System Overview', img: '/dashboard-real.png', desc: 'Real-time monitoring of database status, AI readiness, and system logs.', hasLiveModule: true },
+    { title: 'Project Matrix', img: '/projects-real.png', desc: 'Seamless management of your professional project gallery with live syncing.', hasLiveModule: true },
+    { title: 'Resume Intelligence', img: '/resume-real.png', desc: 'High-end synthesis interface for Gemini-powered LaTeX resume generation.', hasLiveModule: false }
   ];
 
   return (
@@ -158,9 +158,13 @@ const BuiltWith = () => {
                 <div style={{ order: i % 2 === 0 ? 2 : 1 }}>
                   <h4 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: '#fff' }}>{item.title}</h4>
                   <p style={{ color: 'var(--text-secondary)', lineHeight: 1.7, fontSize: '1.1rem', marginBottom: '2rem' }}>{item.desc}</p>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#2997ff', fontWeight: 600, fontSize: '0.9rem' }}>
-                    LIVE SYSTEM MODULE <ArrowRight size={16} />
-                  </div>
+                  
+                  {item.hasLiveModule && (
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#10b981', fontWeight: 600, fontSize: '0.9rem', letterSpacing: '0.1em' }}>
+                      <span style={{ width: '8px', height: '8px', background: '#10b981', borderRadius: '50%', boxShadow: '0 0 10px #10b981' }}></span>
+                      LIVE SYSTEM MODULE <ArrowRight size={16} />
+                    </div>
+                  )}
                 </div>
               </motion.div>
             ))}

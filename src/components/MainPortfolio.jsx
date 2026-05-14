@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useDevice } from '../hooks/useDevice';
 import MobilePortfolio from './MobilePortfolio';
 import Hero from './Hero';
+import TruthAnimation from './TruthAnimation';
 import About from './About';
 import Experience from './Experience';
 import Projects from './Projects';
@@ -27,6 +28,7 @@ function MainPortfolio() {
   return (
     <div className="app">
       <Hero />
+      <TruthAnimation />
       <About />
       <Experience />
       <Projects />

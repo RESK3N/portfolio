@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, Maximize2 } from 'lucide-react';
 import { supabase } from '../utils/supabaseClient';
+import ImageModal from './ImageModal';
 
 const Projects = () => {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -59,10 +61,58 @@ const Projects = () => {
                     )}
                   </div>
                 </div>
-                {project.image_url && (
-                  <div style={{ marginBottom: '1rem', borderRadius: '8px', overflow: 'hidden' }}>
-                    <img src={project.image_url} alt={project.title} style={{ width: '100%', height: 'auto', display: 'block' }} />
+                {project.title === 'VidIntelligence' ? (
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
+                    <motion.div 
+                      whileHover="hover"
+                      style={{ borderRadius: '8px', overflow: 'hidden', cursor: 'zoom-in', position: 'relative' }}
+                      onClick={() => setSelectedImage({ src: "/vidintelligence-mistral.png", alt: "Mistral Analysis" })}
+                    >
+                      <img src="/vidintelligence-mistral.png" alt="Analysis Result" style={{ width: '100%', height: 'auto', display: 'block' }} />
+                      <motion.div 
+                        variants={{ hover: { opacity: 1 } }}
+                        initial={{ opacity: 0 }}
+                        style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: { duration: 0.2 } }}
+                      >
+                        <div style={{ padding: '10px', background: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(5px)', borderRadius: '50%', color: '#fff', border: '1px solid rgba(255,255,255,0.2)' }}>
+                          <Maximize2 size={20} />
+                        </div>
+                      </motion.div>
+                    </motion.div>
+                    <motion.div 
+                      whileHover="hover"
+                      style={{ borderRadius: '8px', overflow: 'hidden', cursor: 'zoom-in', position: 'relative' }}
+                      onClick={() => setSelectedImage({ src: "/vidintelligence-new.png", alt: "Empty UI" })}
+                    >
+                      <img src="/vidintelligence-new.png" alt="Empty UI" style={{ width: '100%', height: 'auto', display: 'block' }} />
+                      <motion.div 
+                        variants={{ hover: { opacity: 1 } }}
+                        initial={{ opacity: 0 }}
+                        style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: { duration: 0.2 } }}
+                      >
+                        <div style={{ padding: '10px', background: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(5px)', borderRadius: '50%', color: '#fff', border: '1px solid rgba(255,255,255,0.2)' }}>
+                          <Maximize2 size={20} />
+                        </div>
+                      </motion.div>
+                    </motion.div>
                   </div>
+                ) : project.image_url && (
+                  <motion.div 
+                    whileHover="hover"
+                    style={{ marginBottom: '1rem', borderRadius: '8px', overflow: 'hidden', cursor: 'zoom-in', position: 'relative' }}
+                    onClick={() => setSelectedImage({ src: project.image_url, alt: project.title })}
+                  >
+                    <img src={project.image_url} alt={project.title} style={{ width: '100%', height: 'auto', display: 'block' }} />
+                    <motion.div 
+                      variants={{ hover: { opacity: 1 } }}
+                      initial={{ opacity: 0 }}
+                      style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: { duration: 0.2 } }}
+                    >
+                      <div style={{ padding: '10px', background: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(5px)', borderRadius: '50%', color: '#fff', border: '1px solid rgba(255,255,255,0.2)' }}>
+                        <Maximize2 size={20} />
+                      </div>
+                    </motion.div>
+                  </motion.div>
                 )}
                 <p style={{ fontSize: '0.875rem', color: 'var(--accent-color)', fontFamily: 'monospace', marginBottom: '1rem' }}>
                   {project.tags && project.tags.join(', ')}
@@ -75,6 +125,13 @@ const Projects = () => {
           </div>
         )}
       </motion.div>
+
+      <ImageModal 
+        isOpen={!!selectedImage} 
+        onClose={() => setSelectedImage(null)} 
+        src={selectedImage?.src} 
+        alt={selectedImage?.alt} 
+      />
     </section>
   );
 };
