@@ -95,29 +95,87 @@ const MobilePortfolio = () => {
       </div>
 
       <main style={{ position: 'relative', zIndex: 1, paddingBottom: '120px' }}>
-        {/* Hero Section */}
-        <section id="home" style={{ height: '90vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 2rem' }}>
+        {/* Hero Section - Upgraded with Desktop Aesthetics */}
+        <section id="home" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 2rem', position: 'relative', overflow: 'hidden' }}>
+          {/* Desktop-style abstract gradient */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.5, ease: "easeOut" }}
+            style={{
+              position: 'absolute',
+              top: '10%',
+              right: '-20%',
+              width: '300px',
+              height: '300px',
+              background: 'radial-gradient(circle, rgba(41,151,255,0.1) 0%, rgba(0,0,0,0) 70%)',
+              borderRadius: '50%',
+              zIndex: -1,
+            }}
+          />
+
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
-              <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#10b981', boxShadow: '0 0 10px #10b981' }} />
-              <span style={{ fontSize: '0.7rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.2em', color: 'rgba(255,255,255,0.4)' }}>AI Engineer & Cloud Ops</span>
+            <div style={{ marginBottom: '1.5rem' }}>
+              <span style={{ fontSize: '1.25rem', color: 'rgba(255,255,255,0.4)', fontWeight: 500, letterSpacing: '-0.02em' }}>
+                Hi, I'm
+              </span>
             </div>
-            <h1 style={{ fontSize: '3.8rem', fontWeight: 900, lineHeight: 0.95, margin: '1rem 0', letterSpacing: '-0.05em' }}>
+            
+            <motion.h1 
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              style={{ fontSize: '3.8rem', fontWeight: 900, lineHeight: 0.95, margin: '0 0 1.5rem 0', letterSpacing: '-0.06em' }}
+            >
               Pritam<br/>
               <span style={{ color: '#2997ff' }}>Mondal.</span>
-            </h1>
-            <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '1.15rem', lineHeight: 1.6, maxWidth: '90%', marginTop: '1.5rem' }}>
-              Crafting intelligent agentic systems and scalable cloud architectures.
-            </p>
-            <div style={{ marginTop: '3rem', display: 'flex', gap: '1rem' }}>
+            </motion.h1>
+
+            <motion.div 
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              style={{ marginBottom: '2.5rem' }}
+            >
+              <span style={{ 
+                fontSize: '0.9rem', 
+                fontWeight: 800, 
+                textTransform: 'uppercase', 
+                letterSpacing: '0.2em',
+                background: 'linear-gradient(135deg, #2997ff 0%, #a855f7 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+                color: 'transparent'
+              }}>
+                AI Engineer & Cloud Ops
+              </span>
+            </motion.div>
+
+            <motion.p 
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.7 }}
+              style={{ color: 'rgba(255,255,255,0.5)', fontSize: '1.15rem', lineHeight: 1.65, maxWidth: '100%', marginBottom: '4rem' }}
+            >
+              I build intelligent, agentic systems and scalable web applications. 
+              Driven by modern design and powerful automation.
+            </motion.p>
+
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.9 }}
+              style={{ display: 'flex', gap: '1rem' }}
+            >
               <motion.a 
                 whileTap={{ scale: 0.95 }}
                 href="mailto:999.pritammondal@gmail.com"
-                style={{ flex: 1, padding: '1.25rem', background: 'linear-gradient(135deg, #2997ff 0%, #a855f7 100%)', color: '#fff', borderRadius: '20px', fontWeight: 800, textAlign: 'center', textDecoration: 'none', boxShadow: '0 10px 20px rgba(41,151,255,0.2)' }}
+                style={{ flex: 1, padding: '1.25rem', background: 'linear-gradient(135deg, #2997ff 0%, #a855f7 100%)', color: '#fff', borderRadius: '20px', fontWeight: 800, textAlign: 'center', textDecoration: 'none', boxShadow: '0 8px 16px rgba(41,151,255,0.15)' }}
               >
                 Say Hello
               </motion.a>
@@ -126,11 +184,13 @@ const MobilePortfolio = () => {
                 href="https://wa.me/918967345961?text=Hey,%20I%20was%20visiting%20your%20website."
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{ width: '65px', height: '65px', background: 'rgba(37,211,102,0.15)', border: '1px solid rgba(37,211,102,0.3)', borderRadius: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#25D366' }}
+                style={{ width: '65px', height: '65px', background: 'rgba(37,211,102,0.1)', border: '1px solid rgba(37,211,102,0.2)', borderRadius: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#25D366' }}
               >
-                <MessageCircle size={28} />
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.414 0 .018 5.396.015 12.03c0 2.12.559 4.189 1.623 6.006L0 24l6.135-1.61a11.751 11.751 0 005.914 1.594h.005c6.637 0 12.032-5.396 12.035-12.03.003-3.213-1.248-6.231-3.522-8.508z"/>
+                </svg>
               </motion.a>
-            </div>
+            </motion.div>
           </motion.div>
         </section>
 
@@ -168,7 +228,7 @@ const MobilePortfolio = () => {
 
                 <div style={{ background: 'rgba(255,255,255,0.02)', padding: '1.5rem', borderRadius: '24px', border: '1px solid rgba(255,255,255,0.05)' }}>
                   <ul style={{ color: 'rgba(255,255,255,0.4)', listStyleType: 'none', padding: 0, margin: 0 }}>
-                    {exp.description.split('\n').map((bullet, idx) => bullet.trim() && (
+                    {exp.description?.split('\n').map((bullet, idx) => bullet.trim() && (
                       <li key={idx} style={{ marginBottom: '1rem', display: 'flex', gap: '0.75rem', fontSize: '0.95rem', lineHeight: 1.6 }}>
                         <span style={{ color: '#a855f7', fontWeight: 900 }}>→</span>
                         {bullet.trim()}
@@ -367,11 +427,45 @@ const MobilePortfolio = () => {
             ))}
           </div>
         </section>
+        {/* Profile Section - Signature Footer */}
+        <section style={{ padding: '6rem 2rem 10rem 2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', background: 'linear-gradient(0deg, rgba(41,151,255,0.05) 0%, transparent 100%)' }}>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            style={{
+              width: '180px',
+              height: '180px',
+              borderRadius: '50%',
+              overflow: 'hidden',
+              border: '3px solid rgba(255,255,255,0.1)',
+              boxShadow: '0 0 50px rgba(41,151,255,0.2)',
+              marginBottom: '2.5rem'
+            }}
+          >
+            <img 
+              src="/profile.png" 
+              alt="Pritam Mondal" 
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+            />
+          </motion.div>
+          <div style={{ textAlign: 'center' }}>
+            <h3 style={{ fontSize: '1.5rem', fontWeight: 900, marginBottom: '0.5rem' }}>Pritam Mondal</h3>
+            <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.9rem', letterSpacing: '0.1em', textTransform: 'uppercase' }}>AI Engineer • Cloud Ops</p>
+          </div>
+        </section>
       </main>
-
       {/* Floating Navigation */}
-      <nav style={{ position: 'fixed', bottom: '1.5rem', left: '1rem', right: '1rem', zIndex: 1000 }}>
-        <div style={{ background: 'rgba(10,10,10,0.85)', backdropFilter: 'blur(30px)', borderRadius: '32px', border: '1px solid rgba(255,255,255,0.1)', padding: '0.5rem', display: 'flex', justifyContent: 'space-around', alignItems: 'center', boxShadow: '0 10px 30px rgba(0,0,0,0.5)' }}>
+      <nav style={{ position: 'fixed', bottom: '0', left: '0', right: '0', zIndex: 1000, paddingBottom: 'env(safe-area-inset-bottom, 1.5rem)' }}>
+        <div style={{ 
+          background: '#0a0a0a', 
+          borderTop: '1px solid rgba(255,255,255,0.08)', 
+          padding: '0.75rem 1rem', 
+          display: 'flex', 
+          justifyContent: 'space-around', 
+          alignItems: 'center',
+          boxShadow: '0 -10px 30px rgba(0,0,0,0.8)'
+        }}>
           {navItems.map(item => (
             <motion.button
               key={item.id}
@@ -382,32 +476,35 @@ const MobilePortfolio = () => {
               }}
               style={{ 
                 border: 'none', 
-                borderRadius: '24px', 
-                padding: '0.75rem',
-                color: activeSection === item.id ? '#2997ff' : 'rgba(255,255,255,0.3)',
+                background: 'none',
+                padding: '0.5rem',
+                color: activeSection === item.id ? '#2997ff' : 'rgba(255,255,255,0.45)', // Much better visibility
                 display: 'flex', 
                 flexDirection: 'column', 
                 alignItems: 'center', 
-                gap: '0.25rem',
+                gap: '0.35rem',
                 position: 'relative',
                 flex: 1
               }}
             >
+              {item.icon}
+              <span style={{ fontSize: '0.65rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                {item.label}
+              </span>
               {activeSection === item.id && (
                 <motion.div
-                  layoutId="activeTab"
-                  transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                  layoutId="activeDot"
                   style={{
                     position: 'absolute',
-                    inset: 0,
-                    background: 'rgba(255,255,255,0.1)',
-                    borderRadius: '24px',
-                    zIndex: -1
+                    top: '-4px',
+                    width: '4px',
+                    height: '4px',
+                    background: '#2997ff',
+                    borderRadius: '50%',
+                    boxShadow: '0 0 10px rgba(41,151,255,0.8)'
                   }}
                 />
               )}
-              {item.icon}
-              <span style={{ fontSize: '0.65rem', fontWeight: 800 }}>{item.label}</span>
             </motion.button>
           ))}
         </div>

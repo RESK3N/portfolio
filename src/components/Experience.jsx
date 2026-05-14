@@ -114,7 +114,7 @@ const Experience = () => {
                 </h4>
                 
                 <ul style={{ color: 'rgba(255,255,255,0.5)', listStyleType: 'none', padding: 0 }}>
-                  {exp.description.split('\n').map((item, idx) => {
+                  {exp.description?.split('\n').map((item, idx) => {
                     if (!item.trim()) return null;
                     return (
                       <li key={idx} style={{ marginBottom: '1rem', position: 'relative', paddingLeft: '1.8rem', fontSize: '1.05rem', lineHeight: 1.7 }}>
