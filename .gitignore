@@ -22,7 +22,6 @@ dist-ssr
 .vscode/*
 !.vscode/extensions.json
 vite.config.lan.js
-src/utils/supabaseClient.mock.js
 .idea
 .DS_Store
 *.suo
