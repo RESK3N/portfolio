@@ -9,10 +9,6 @@ const ManageProjects = () => {
   const [editingId, setEditingId] = useState(null);
   const [formData, setFormData] = useState({ title: '', description: '', tags: '', github_link: '', live_link: '', image_url: '' });
 
-  useEffect(() => {
-    fetchProjects();
-  }, []);
-
   const fetchProjects = async () => {
     try {
       const { data, error } = await supabase.from('projects').select('*').order('created_at', { ascending: false });
@@ -23,6 +19,10 @@ const ManageProjects = () => {
       alert('System Alarm: Unable to synchronize projects. Please check connection.');
     }
   };
+
+  useEffect(() => {
+    fetchProjects();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
