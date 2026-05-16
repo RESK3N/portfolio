@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../../utils/supabaseClient';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, Trash2, Edit2, ExternalLink, Code2, Save, X, FolderOpen } from 'lucide-react';
+import { Plus, Trash2, Edit2, ExternalLink, Code2, Save, X, FolderOpen, Upload, Image as ImageIcon, Loader2 } from 'lucide-react';
 
 const ManageProjects = () => {
   const [projects, setProjects] = useState([]);
   const [isAdding, setIsAdding] = useState(false);
   const [editingId, setEditingId] = useState(null);
   const [formData, setFormData] = useState({ title: '', description: '', tags: '', github_link: '', live_link: '', image_url: '' });
+  const [uploading, setUploading] = useState(false);
 
   const fetchProjects = async () => {
     try {
@@ -23,6 +24,41 @@ const ManageProjects = () => {
   useEffect(() => {
     fetchProjects();
   }, []);
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    try {
+      setUploading(true);
+      
+      // 1. Create a unique file path
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Math.random().toString(36).substring(2)}_${Date.now()}.${fileExt}`;
+      const filePath = `project-thumbnails/${fileName}`;
+
+      // 2. Upload to Supabase Storage (assuming bucket 'portfolio' exists)
+      const { error: uploadError } = await supabase.storage
+        .from('portfolio')
+        .upload(filePath, file);
+
+      if (uploadError) throw uploadError;
+
+      // 3. Get Public URL
+      const { data: { publicUrl } } = supabase.storage
+        .from('portfolio')
+        .getPublicUrl(filePath);
+
+      setFormData(prev => ({ ...prev, image_url: publicUrl }));
+      console.log('[SystemMonitor] Asset uploaded successfully:', publicUrl);
+
+    } catch (err) {
+      console.error('[SystemMonitor] Asset deployment failed:', err.message);
+      alert('Storage Error: Ensure you have a "portfolio" bucket created in Supabase with Public access.');
+    } finally {
+      setUploading(false);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -111,9 +147,77 @@ const ManageProjects = () => {
                 <label style={{ fontSize: '0.75rem', fontWeight: 700, color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase' }}>Live Link</label>
                 <input style={{ padding: '0.75rem', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: '#fff' }} value={formData.live_link} onChange={e => setFormData({...formData, live_link: e.target.value})} placeholder="https://..." />
               </div>
-              <div style={{ gridColumn: 'span 2', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                <label style={{ fontSize: '0.75rem', fontWeight: 700, color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase' }}>Image URL (Optional)</label>
-                <input style={{ padding: '0.75rem', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: '#fff' }} value={formData.image_url || ''} onChange={e => setFormData({...formData, image_url: e.target.value})} placeholder="/screenshot.png or https://..." />
+              <div style={{ gridColumn: 'span 2', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                <label style={{ fontSize: '0.75rem', fontWeight: 700, color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase' }}>Visual Identity (Project Thumbnail)</label>
+                
+                <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'flex-start' }}>
+                  {/* Preview Area */}
+                  <div style={{ 
+                    width: '120px', 
+                    height: '80px', 
+                    background: 'rgba(255,255,255,0.02)', 
+                    borderRadius: '12px', 
+                    border: '1px solid rgba(255,255,255,0.1)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    overflow: 'hidden'
+                  }}>
+                    {formData.image_url ? (
+                      <img src={formData.image_url} alt="Preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    ) : (
+                      <ImageIcon size={24} color="rgba(255,255,255,0.1)" />
+                    )}
+                  </div>
+
+                  {/* Upload Controls */}
+                  <div style={{ flex: 1 }}>
+                    <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.5rem' }}>
+                      <input 
+                        type="file" 
+                        id="image-upload" 
+                        accept="image/*" 
+                        onChange={handleImageUpload} 
+                        style={{ display: 'none' }} 
+                      />
+                      <label 
+                        htmlFor="image-upload" 
+                        style={{ 
+                          padding: '0.6rem 1rem', 
+                          background: 'rgba(41,151,255,0.1)', 
+                          border: '1px solid rgba(41,151,255,0.2)', 
+                          borderRadius: '8px', 
+                          color: '#2997ff', 
+                          fontSize: '0.8rem', 
+                          fontWeight: 600, 
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.5rem'
+                        }}
+                      >
+                        {uploading ? <Loader2 size={16} className="animate-spin" /> : <Upload size={16} />}
+                        {uploading ? 'Deploying Asset...' : 'Upload Image'}
+                      </label>
+                      
+                      {formData.image_url && (
+                        <button 
+                          type="button"
+                          onClick={() => setFormData(prev => ({ ...prev, image_url: '' }))}
+                          style={{ padding: '0.6rem', background: 'rgba(248,113,113,0.1)', border: '1px solid rgba(248,113,113,0.2)', borderRadius: '8px', color: '#f87171', cursor: 'pointer' }}
+                        >
+                          <Trash2 size={16} />
+                        </button>
+                      )}
+                    </div>
+                    <input 
+                      style={{ width: '100%', padding: '0.6rem', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '8px', color: 'rgba(255,255,255,0.4)', fontSize: '0.75rem' }} 
+                      value={formData.image_url || ''} 
+                      onChange={e => setFormData({...formData, image_url: e.target.value})} 
+                      placeholder="Or paste external URL (https://...)" 
+                    />
+                  </div>
+                </div>
               </div>
             </div>
             <button type="submit" style={{ marginTop: '2rem', width: '100%', padding: '1rem', background: '#2997ff', color: '#fff', border: 'none', borderRadius: '12px', fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem' }}>
