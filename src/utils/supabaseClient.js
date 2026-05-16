@@ -8,3 +8,9 @@ const realClient = createClient(supabaseUrl, supabaseAnonKey)
 
 // If VITE_MOCK_AUTH is set to 'true', export the mock client
 export const supabase = import.meta.env.VITE_MOCK_AUTH === 'true' ? mockClient : realClient
+
+export const getStorageUrl = (path) => {
+  if (!path) return '';
+  if (path.startsWith('http')) return path; // Already a full URL
+  return `${supabaseUrl}/storage/v1/object/public/portfolio/${path}`;
+};

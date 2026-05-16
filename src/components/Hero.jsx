@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import SafeImage from './SafeImage';
+import { getStorageUrl } from '../utils/supabaseClient';
 
 const Hero = () => {
   return (
@@ -127,7 +128,7 @@ const Hero = () => {
             boxShadow: '0 0 60px rgba(41,151,255,0.15), 0 0 120px rgba(41,151,255,0.05)',
           }}>
             <SafeImage 
-              src="https://augtdugzpbkejuqnztmm.supabase.co/storage/v1/object/public/portfolio/profile.png" 
+              src={getStorageUrl('profile.png')} 
               alt="Pritam Mondal" 
               style={{ 
                 width: '100%', 

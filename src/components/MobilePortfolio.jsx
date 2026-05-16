@@ -3,6 +3,7 @@ import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
 import { supabase } from '../utils/supabaseClient';
 import TruthAnimation from './TruthAnimation';
 import ImageModal from './ImageModal';
+import { getStorageUrl } from '../utils/supabaseClient';
 import { 
   Menu, X, Code2, ExternalLink, Mail, Maximize2,
   MessageCircle, ArrowRight, Zap, Code, 
@@ -444,7 +445,7 @@ const MobilePortfolio = () => {
             }}
           >
             <img 
-              src="https://augtdugzpbkejuqnztmm.supabase.co/storage/v1/object/public/portfolio/profile.png" 
+              src={getStorageUrl('profile.png')} 
               alt="Pritam Mondal" 
               style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
             />
