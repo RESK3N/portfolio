@@ -197,7 +197,7 @@ const ManageProjects = () => {
                         }}
                       >
                         {uploading ? <Loader2 size={16} className="animate-spin" /> : <Upload size={16} />}
-                        {uploading ? 'Deploying Asset...' : 'Upload Image'}
+                        {uploading ? 'Deploying Asset...' : formData.image_url ? 'Replace Image' : 'Upload Image'}
                       </label>
                       
                       {formData.image_url && (

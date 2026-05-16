@@ -39,9 +39,9 @@ const BuiltWith = () => {
   ];
 
   const adminShowcase = [
-    { title: 'System Overview', img: '/dashboard-real.png', desc: 'Real-time monitoring of database status, AI readiness, and system logs.' },
-    { title: 'Project Matrix', img: '/projects-real.png', desc: 'Seamless management of your professional project gallery with live syncing.' },
-    { title: 'Resume Intelligence', img: '/resume-real.png', desc: 'High-end synthesis interface for Gemini-powered LaTeX resume generation.' }
+    { title: 'System Overview', img: 'https://augtdugzpbkejuqnztmm.supabase.co/storage/v1/object/public/portfolio/dashboard-real.png', desc: 'Real-time monitoring of database status, AI readiness, and system logs.' },
+    { title: 'Project Matrix', img: 'https://augtdugzpbkejuqnztmm.supabase.co/storage/v1/object/public/portfolio/projects-real.png', desc: 'Seamless management of your professional project gallery with live syncing.' },
+    { title: 'Resume Intelligence', img: 'https://augtdugzpbkejuqnztmm.supabase.co/storage/v1/object/public/portfolio/resume-real.png', desc: 'High-end synthesis interface for Gemini-powered LaTeX resume generation.' }
   ];
 
   return (

@@ -444,7 +444,7 @@ const MobilePortfolio = () => {
             }}
           >
             <img 
-              src="/profile.png" 
+              src="https://augtdugzpbkejuqnztmm.supabase.co/storage/v1/object/public/portfolio/profile.png" 
               alt="Pritam Mondal" 
               style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
             />
