@@ -11,6 +11,8 @@ import Contact from './Contact';
 import BuiltWith from './BuiltWith';
 import ResumeDownload from './ResumeDownload';
 
+import InteractiveBackground from './InteractiveBackground';
+
 function MainPortfolio() {
   const { isMobile } = useDevice();
 
@@ -26,7 +28,8 @@ function MainPortfolio() {
   }
 
   return (
-    <div className="app">
+    <div className="app" style={{ position: 'relative', zIndex: 1 }}>
+      <InteractiveBackground />
       <Hero />
       <TruthAnimation />
       <Experience />

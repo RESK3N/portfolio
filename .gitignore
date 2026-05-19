@@ -29,3 +29,6 @@ vite.config.lan.js
 *.njsproj
 *.sln
 *.sw?
+
+# Local Netlify folder
+.netlify

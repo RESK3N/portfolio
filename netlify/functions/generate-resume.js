@@ -21,6 +21,7 @@ const RESUME_TEMPLATE_PREAMBLE = `\\documentclass[letterpaper,10pt]{article}
 \\usepackage[scaled]{helvet}
 \\renewcommand\\familydefault{\\sfdefault}
 \\usepackage[T1]{fontenc}
+\\usepackage{qrcode}
 \\input{glyphtounicode}
 
 \\pagestyle{fancy}
@@ -72,7 +73,16 @@ export default async (req) => {
   }
 
   try {
-    const supabase = createClient(supabaseUrl, supabaseKey);
+    // Extract auth token from request
+    const authHeader = req.headers.get('Authorization');
+    const token = authHeader ? authHeader.split(' ')[1] : null;
+
+    // Initialize Supabase with the user's token if available
+    const supabase = createClient(supabaseUrl, supabaseKey, {
+      global: {
+        headers: token ? { Authorization: `Bearer ${token}` } : {}
+      }
+    });
 
     // Fetch all portfolio data
     const [aboutRes, expRes, projRes, skillsRes] = await Promise.all([
@@ -100,6 +110,8 @@ CRITICAL RULES:
 7. Education and Certifications sections should use the same static data provided.
 8. Keep bullet points concise — one line each, no periods at end.
 9. Output ONLY raw LaTeX code. No markdown, no code fences, no explanations.
+10. In the Header section, include a vector QR code linking to your portfolio site using: \\qrcode[height=1.25cm]{https://pritamdev.netlify.app}. Position it on the top right next to your personal contact info (e.g., using a tabular layout where the left cell has the name and links, and the right cell contains the \\qrcode).
+
 
 PERSONAL INFO (static — always include):
 Name: Pritam Mondal
@@ -134,13 +146,15 @@ CERTIFICATIONS (static — always include exactly):
 Generate the \\begin{document}...\\end{document} body now:`;
 
     // Call Gemini AI
+    const modelName = process.env.GEMINI_MODEL || 'gemini-2.5-flash';
     const ai = new GoogleGenAI({ apiKey: geminiKey });
-    const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
-      contents: prompt,
+    
+    const result = await ai.models.generateContent({
+      model: modelName,
+      contents: [{ role: 'user', parts: [{ text: prompt }] }],
     });
-
-    let texBody = response.text;
+    
+    let texBody = result.text;
     
     // Clean up any markdown code fences if Gemini adds them
     texBody = texBody.replace(/```latex\n?/g, '').replace(/```\n?/g, '').trim();
@@ -158,30 +172,85 @@ Generate the \\begin{document}...\\end{document} body now:`;
       });
 
     if (uploadError) {
-      console.error('Upload error:', uploadError);
-      return new Response(JSON.stringify({ error: 'Failed to upload .tex file', details: uploadError.message }), { status: 500, headers });
+      console.error('Upload error details:', uploadError);
+      return new Response(JSON.stringify({ 
+        error: 'Failed to upload .tex file', 
+        details: uploadError.message,
+        hint: 'Check if you have permissions and if the bucket exists.'
+      }), { status: 500, headers });
     }
 
-    // Get public URL
+    // Get public URL of the latest main resume
     const { data: urlData } = supabase.storage.from('resume').getPublicUrl(fileName);
     const texUrl = urlData.publicUrl;
-
-    // Generate PDF URL via latexonline.cc
     const pdfUrl = `https://latexonline.cc/compile?url=${encodeURIComponent(texUrl)}`;
+
+    // Handle History Versioning
+    const timestamp = Date.now();
+    const versionFileName = `versions/resume_${timestamp}.tex`;
+    
+    // Upload versioned copy
+    const { error: verUploadError } = await supabase.storage
+      .from('resume')
+      .upload(versionFileName, fullTex, {
+        contentType: 'text/plain',
+        upsert: true,
+      });
+      
+    if (verUploadError) {
+      console.warn('Failed to upload versioned .tex file:', verUploadError.message);
+    }
+
+    const { data: verUrlData } = supabase.storage.from('resume').getPublicUrl(versionFileName);
+    const versionTexUrl = verUrlData.publicUrl;
+    const versionPdfUrl = `https://latexonline.cc/compile?url=${encodeURIComponent(versionTexUrl)}`;
+
+    // Read history.json
+    let history = [];
+    try {
+      const { data: fileData, error: downloadError } = await supabase.storage
+        .from('resume')
+        .download('history.json');
+      if (!downloadError && fileData) {
+        const text = await fileData.text();
+        history = JSON.parse(text);
+      }
+    } catch (e) {
+      console.warn('No previous history found or failed to parse. Creating new history log.', e);
+    }
+
+    // Add new version
+    const newVersion = {
+      id: String(timestamp),
+      versionName: `Version - ${new Date().toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' })}`,
+      timestamp,
+      texUrl: versionTexUrl,
+      pdfUrl: versionPdfUrl
+    };
+    history.unshift(newVersion);
+
+    // Save updated history.json
+    const { error: historyUploadError } = await supabase.storage
+      .from('resume')
+      .upload('history.json', JSON.stringify(history, null, 2), {
+        contentType: 'application/json',
+        upsert: true,
+      });
+
+    if (historyUploadError) {
+      console.warn('Failed to update history.json in storage:', historyUploadError.message);
+    }
 
     return new Response(JSON.stringify({
       success: true,
       texUrl,
       pdfUrl,
       texContent: fullTex,
+      history
     }), { status: 200, headers });
 
   } catch (error) {
     console.error('Error generating resume:', error);
     return new Response(JSON.stringify({ error: 'Failed to generate resume', details: error.message }), { status: 500, headers });
   }
-};
-
-export const config = {
-  path: '/.netlify/functions/generate-resume',
 };

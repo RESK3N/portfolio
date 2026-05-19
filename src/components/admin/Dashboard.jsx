@@ -26,6 +26,7 @@ import ManageExperience from './ManageExperience';
 import ManageSkills from './ManageSkills';
 import ManageAbout from './ManageAbout';
 import ManageResume from './ManageResume';
+import InteractiveBackground from '../InteractiveBackground';
 
 const Dashboard = () => {
   const { isMobile } = useDevice();
@@ -159,54 +160,7 @@ const Dashboard = () => {
       position: 'relative',
       overflow: 'hidden'
     }}>
-      {/* Animated Mesh Gradient Background */}
-      <div style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        zIndex: 0,
-        opacity: 0.4,
-        pointerEvents: 'none'
-      }}>
-        <motion.div
-          animate={{
-            scale: [1, 1.2, 1],
-            rotate: [0, 90, 0],
-            x: [0, 100, 0],
-            y: [0, 50, 0]
-          }}
-          transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-          style={{
-            position: 'absolute',
-            top: '-20%',
-            left: '-10%',
-            width: '60%',
-            height: '60%',
-            background: 'radial-gradient(circle, rgba(41,151,255,0.15) 0%, transparent 70%)',
-            borderRadius: '50%'
-          }}
-        />
-        <motion.div
-          animate={{
-            scale: [1.2, 1, 1.2],
-            rotate: [90, 0, 90],
-            x: [100, 0, 100],
-            y: [50, 0, 50]
-          }}
-          transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
-          style={{
-            position: 'absolute',
-            bottom: '-20%',
-            right: '-10%',
-            width: '60%',
-            height: '60%',
-            background: 'radial-gradient(circle, rgba(168,85,247,0.15) 0%, transparent 70%)',
-            borderRadius: '50%'
-          }}
-        />
-      </div>
+      <InteractiveBackground />
 
       {/* Sidebar */}
       <motion.div 
